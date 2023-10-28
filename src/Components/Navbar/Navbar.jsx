@@ -2,7 +2,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import { Badge, Box, IconButton, Link } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { useNavigate } from "react-router";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleNavigate = (route) => {
+    navigate(`/${route}`);
+  };
   return (
     <nav className="navbar navbar-expand-sm bg-body-tertiary p-lg-2 shadow-sm">
       <div className="container-fluid">
@@ -48,11 +53,46 @@ const Navbar = () => {
                       </button>
                     </form>
                   </li>
-                  <li className="list-group-item">Dashboard</li>
-                  <li className="list-group-item">Admin</li>
-                  <li className="list-group-item">Users</li>
-                  <li className="list-group-item">Profile</li>
-                  <li className="list-group-item">Logout</li>
+                  <li
+                    className="list-group-item"
+                    onClick={() => {
+                      handleNavigate("dashboard");
+                    }}
+                  >
+                    Dashboard
+                  </li>
+                  <li
+                    className="list-group-item"
+                    onClick={() => {
+                      handleNavigate("tutors");
+                    }}
+                  >
+                    Tutors
+                  </li>
+                  <li
+                    className="list-group-item"
+                    onClick={() => {
+                      handleNavigate("students");
+                    }}
+                  >
+                    Students
+                  </li>
+                  <li
+                    className="list-group-item"
+                    onClick={() => {
+                      handleNavigate("subjects");
+                    }}
+                  >
+                    Subjects
+                  </li>
+                  <li
+                    className="list-group-item"
+                    onClick={() => {
+                      handleNavigate("options");
+                    }}
+                  >
+                    Options
+                  </li>
                 </ul>
               </div>
             </div>
