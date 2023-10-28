@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+.titleContainer {
+  box-shadow: 0px 2px 1px -1px #25364b;
+  margin-left: 10px;
+}
+
+.sideLinksContainer {
+  min-width: 100%;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background-color: #233242;
+}
+
+.sideTitleName {
+  color: white;
+  font-size: 17px;
+}
+
+.sideLink {
+  color: white;
+}
+
+.sideLink:hover {
+  background-color: #c4c4c4b5;
+  border-left: 2px solid white;
+  color: #233242;
+  cursor: pointer;
+}
+
+/* main container  */
+.mobileDiv {
+  display: none;
+}
+
+
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width:576px) and (max-width:1024px) {
+  .sidebar {
+    max-width: 10%;
+  }
+
+  .linkTitle {
+    display: none;
+  }
+
+  .sideLink {
+    padding: 15px 7px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .titleContainer {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .sideTitleName {
+    display: none;
+  }
+
+  .mainContent {
+    width: 90%;
+  }
+
+  .loggedUserName {
+    display: none;
+  }
+
+  .card {
+    min-height: 208px;
+  }
+}
+
+@media screen and (max-width:575px) {
+  .sidebar {
+    display: none;
+  }
+
+  .mobileDiv {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar {
+    background-color: #233242;
+    color: white;
+  }
+
+  .offcanvas {
+    background-color: #233242;
+  }
+
+  .list-group-item {
+    background-color: #233242;
+    color: white;
+  }
+}
