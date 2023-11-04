@@ -6,6 +6,7 @@ import { Box, Button, Typography } from "@mui/material";
 import Table from "../../Components/Table/Table";
 import ModalComponent from "../../Components/Modal/Modal";
 import { useFetchAllSubjectsQuery } from "../../store";
+import TableSkeleton from "../../Components/Skeleton/TableSkeleton";
 
 const Subjects = () => {
   const { data, error, isLoading } = useFetchAllSubjectsQuery();
@@ -45,11 +46,15 @@ const Subjects = () => {
         </Button>
       </Box>
       <Box sx={{ my: 3 }}>
-        <Table
-          initialcolumns={columns}
-          initialrows={subjects}
-          isfor={"subjects"}
-        />
+        {subjects.length > 0 ? (
+          <Table
+            initialcolumns={columns}
+            initialrows={subjects}
+            isfor={"subjects"}
+          />
+        ) : (
+          <TableSkeleton />
+        )}
       </Box>
     </Box>
   );

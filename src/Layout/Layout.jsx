@@ -1,9 +1,13 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 const Layout = () => {
-  return (
+  const currentUser = useSelector((state) => {
+    return state.currentUser.data.token;
+  });
+  return currentUser ? (
     <Box maxWidth="xl" sx={{ m: 0, p: 0 }}>
       <Box className="row p-0 m-0">
         <Sidebar />
@@ -18,6 +22,8 @@ const Layout = () => {
         </Box>
       </Box>
     </Box>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 
