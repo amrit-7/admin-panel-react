@@ -46,7 +46,7 @@ const Subjects = () => {
         </Button>
       </Box>
       <Box sx={{ my: 3 }}>
-        {subjects.length > 0 ? (
+        {!isLoading ? (
           <Table
             initialcolumns={columns}
             initialrows={subjects}

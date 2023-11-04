@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
-import { Box, LinearProgress, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Table from "../../Components/Table/Table";
 import { useFetchAllTutorsQuery } from "../../store/apis/tutorapi";
+import TableSkeleton from "../../Components/Skeleton/TableSkeleton";
 const Tutors = () => {
   const { data, error, isLoading } = useFetchAllTutorsQuery();
+  console.log("🚀 ~ file: Tutors.jsx:8 ~ Tutors ~ data:", data);
   const allTutors = !isLoading && !error && data ? data.data : [];
   const columns = [
     { field: "first_name", headerName: "Name", width: 150 },
@@ -26,7 +28,7 @@ const Tutors = () => {
       </Box>
       <Box sx={{ mt: 2 }}>
         {isLoading ? (
-          <LinearProgress />
+          <TableSkeleton />
         ) : (
           <Table
             initialcolumns={columns}
