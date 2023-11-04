@@ -1,15 +1,58 @@
 import {
   Box,
-  Button,
   Container,
   FormLabel,
   Grid,
   TextField,
   Typography,
 } from "@mui/material";
-import loginimg from "../../assets/loginhero.png";
+import axios from "axios";
+import { useState } from "react";
+import { useFormik } from "formik";
+import LoadingButton from "@mui/lab/LoadingButton";
 import "./loginpage.css";
+import loginimg from "../../assets/loginhero.png";
+import { baseAPI } from "../../utils/baseAPIandKey";
+import { loginSchema } from "../../utils/formsSchema";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../store";
+import { toast } from "react-toastify";
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const defaultFormFields = {
+    email: "",
+    password: "",
+  };
+  const [loading, setLoading] = useState(false);
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: defaultFormFields,
+      validationSchema: loginSchema,
+      onSubmit: (values) => handleFormSubmit(values),
+    });
+  const handleFormSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post(`${baseAPI}/api/login`, values);
+      if (res.status === 200) {
+        navigate("/");
+        toast.success(res.data.message);
+        dispatch(setCurrentUser(res.data.data));
+        setLoading(false);
+      }
+    } catch (error) {
+      if (error.response?.status !== 200) {
+        setLoading(false);
+        toast.error("Invalid Email or password");
+      } else if (error.code === "ERR_NETWORK") {
+        setLoading(false);
+        toast.error("Network Error, Try Again");
+      }
+    }
+  };
+
   return (
     <Container
       maxWidth="xl"
@@ -82,7 +125,7 @@ const LoginPage = () => {
                 Sign In
               </Typography>
               <Box sx={{ mt: 5 }}>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <FormLabel
                       type="email"
@@ -99,7 +142,15 @@ const LoginPage = () => {
                       size="small"
                       label="Example@email.com"
                       type="email"
+                      name="email"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
+                    {errors.email && touched.email ? (
+                      <p className="form-error" style={{ color: "red" }}>
+                        {errors.email}
+                      </p>
+                    ) : null}
                     <FormLabel
                       sx={{
                         color: "black",
@@ -112,7 +163,19 @@ const LoginPage = () => {
                     >
                       Password
                     </FormLabel>
-                    <TextField size="small" label="at least 8 characters" />
+                    <TextField
+                      size="small"
+                      type="password"
+                      name="password"
+                      label="at least 8 characters"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.password && touched.password ? (
+                      <p className="form-error" style={{ color: "red" }}>
+                        {errors.password}
+                      </p>
+                    ) : null}
                     <Typography
                       variant="subtitle2"
                       sx={{ ml: "auto", mt: 1 }}
@@ -121,7 +184,8 @@ const LoginPage = () => {
                       Forgot Password?
                     </Typography>
                     <Box sx={{ mt: 2 }}>
-                      <Button
+                      <LoadingButton
+                        type="submit"
                         sx={{
                           fontSize: 15,
                           textTransform: "capitalize",
@@ -130,9 +194,10 @@ const LoginPage = () => {
                           width: "100%",
                         }}
                         variant="contained"
+                        loading={loading}
                       >
                         Sign In
-                      </Button>
+                      </LoadingButton>
                     </Box>
                   </Box>
                 </form>

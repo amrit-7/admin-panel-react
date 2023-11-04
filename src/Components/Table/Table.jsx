@@ -7,7 +7,19 @@ import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import RemoveModeratorRoundedIcon from "@mui/icons-material/RemoveModeratorRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useNavigate } from "react-router";
+import ModalComponent from "../Modal/Modal";
+import { useState } from "react";
+import DeleteModal from "../Modal/DeleteModal";
 const Table = ({ initialrows, initialcolumns, isfor }) => {
+  const [open, setOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
+  const [idToEdit, setIdToEdit] = useState("");
+  const [modalDelete, setModalDelete] = useState(false);
+  const [modalIsFor, setModalIsFor] = useState("");
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleDeleteOpen = () => setModalDelete(true);
+  const handleDeleteClose = () => setModalDelete(false);
   const navigate = useNavigate();
   const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
     [`& .${gridClasses.row}.odd`]: {
@@ -17,10 +29,15 @@ const Table = ({ initialrows, initialcolumns, isfor }) => {
   const handleEdit = (id) => {
     if (isfor == "tutors") {
       navigate(`/tutors/edit/${id}`);
+    } else if (isfor == "subjects") {
+      setModalIsFor("editSubject");
+      setIdToEdit(id);
+      handleOpen();
     }
   };
   const handleDelete = (id) => {
-    console.log(id);
+    setIdToDelete(id);
+    handleDeleteOpen();
   };
   const handleSuspend = (id) => {
     console.log(id);
@@ -83,6 +100,7 @@ const Table = ({ initialrows, initialcolumns, isfor }) => {
             showQuickFilter: true,
           },
         }}
+        disableDensitySelector
         getRowId={(row) => row.id}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
@@ -90,6 +108,18 @@ const Table = ({ initialrows, initialcolumns, isfor }) => {
         rows={initialrows}
         columns={isfor == "students" ? initialcolumns : ActionInitialColumns}
         rowsPerPageOptions={[]}
+      />
+      <ModalComponent
+        open={open}
+        onClose={handleClose}
+        modalisfor={modalIsFor}
+        idtoedit={idToEdit}
+      />
+      <DeleteModal
+        idtodelete={idToDelete}
+        open={modalDelete}
+        onClose={handleDeleteClose}
+        modalisfor={"deleteSubject"}
       />
     </div>
   );

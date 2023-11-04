@@ -4,8 +4,18 @@ import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, Box, Typography, TextField, IconButton } from "@mui/material";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import {
+  useAddNewSubjectMutation,
+  useUpdateSubjectMutation,
+} from "../../store";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { LoadingButton } from "@mui/lab";
 export default function ModalComponent(props) {
-  const { isfor } = props;
+  const [addSubject, { isLoading }] = useAddNewSubjectMutation();
+  const [updateSubject, { isLoading: updating }] = useUpdateSubjectMutation();
+  const [subject, setSubject] = useState("");
+  const { modalisfor, idtoedit } = props;
   const style = {
     position: "absolute",
     top: "50%",
@@ -22,7 +32,26 @@ export default function ModalComponent(props) {
     props.onClose();
   };
   const handleSubjectValue = (e) => {
-    console.log(e.target.value);
+    const title = e.target.value;
+    setSubject(title);
+  };
+  const handleAddNewSubject = async () => {
+    if (subject.length > 0) {
+      const res = await addSubject(subject);
+      if (res.data.success == true) {
+        toast.success("New subject added successfully");
+        props.onClose();
+      } else if (res.data.success == false) {
+        toast.error(res.data.data.title[0]);
+      }
+    } else {
+      toast.error("Please add subject");
+    }
+  };
+  const handleEditSubject = async () => {
+    const data = { idtoedit, subject };
+    const res = await updateSubject(data);
+    console.log("🚀 ~ file: Modal.jsx:54 ~ handleEditSubject ~ res:", res);
   };
   return (
     <Modal {...props}>
@@ -55,7 +84,7 @@ export default function ModalComponent(props) {
             width: "100%",
           }}
         >
-          {isfor === "subject" ? (
+          {modalisfor === "editSubject" ? (
             <>
               <TextField
                 label="Subject Name"
@@ -64,15 +93,36 @@ export default function ModalComponent(props) {
                 onChange={handleSubjectValue}
                 focused
               />
-              <Button
+              <LoadingButton
+                loading={updating}
                 size="small"
                 sx={{ mt: 2, textTransform: "capitalize" }}
                 variant="contained"
+                onClick={handleEditSubject}
+              >
+                Edit Subject
+              </LoadingButton>
+            </>
+          ) : modalisfor === "subject" ? (
+            <>
+              <TextField
+                label="Subject Name"
+                color="primary"
+                placeholder="Mathematics"
+                onChange={handleSubjectValue}
+                focused
+              />
+              <LoadingButton
+                loading={isLoading}
+                size="small"
+                sx={{ mt: 2, textTransform: "capitalize" }}
+                variant="contained"
+                onClick={handleAddNewSubject}
               >
                 Add Subject
-              </Button>
+              </LoadingButton>
             </>
-          ) : isfor === "option" ? (
+          ) : modalisfor === "option" ? (
             <>
               <TextField
                 sx={{ mb: 2 }}

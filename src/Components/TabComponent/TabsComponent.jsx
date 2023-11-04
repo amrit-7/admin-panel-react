@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 function CustomTabPanel(props) {
@@ -18,7 +17,7 @@ function CustomTabPanel(props) {
         <Box
           sx={{ boxShadow: "1", p: 2, borderRadius: "0 4px 4px 4px", mb: 10 }}
         >
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>

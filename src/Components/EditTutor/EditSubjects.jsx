@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -8,24 +9,7 @@ import {
 } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-const EditSubjects = () => {
-  const subjects = [
-    {
-      name: "Javascript",
-      from: "Grade 10",
-      to: "Masters/Postgraduate",
-    },
-    {
-      name: "HTML 5 ",
-      from: "Beginner",
-      to: "Expert",
-    },
-    {
-      name: "AJAX ",
-      from: "Grade 12",
-      to: "Masters/Postgraduate",
-    },
-  ];
+const EditSubjects = ({ subjects }) => {
   return (
     <>
       <Typography sx={{ mt: 4, fontWeight: 500 }} variant="body1">
@@ -38,7 +22,7 @@ const EditSubjects = () => {
           <Typography variant="body2">Subject Teaching</Typography>
           <Box sx={{ mt: 2 }}>
             {subjects.map((data, index) => {
-              const { name, from, to } = data;
+              const { subject, level_from, level_to } = data;
               return (
                 <Box
                   key={index}
@@ -52,7 +36,7 @@ const EditSubjects = () => {
                   }}
                 >
                   <Typography variant="subtitle">
-                    {name} ({from}-{to})
+                    {subject} ({level_from}-{level_to})
                   </Typography>
                   <Box sx={{ display: "flex" }}>
                     <Tooltip title="Edit">

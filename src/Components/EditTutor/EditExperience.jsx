@@ -1,13 +1,67 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+/* eslint-disable react/prop-types */
+import {
+  Box,
+  Button,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import DatePickerComponent from "../DatePicker/DatePickerComponent";
-
-const EditExperience = () => {
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+const EditExperience = ({ experience }) => {
   return (
     <>
       <Box>
         <Typography sx={{ mt: 4, fontWeight: 500 }} variant="body1">
           Experience
         </Typography>
+        <Box sx={{ mt: 2 }}>
+          {experience.map((data, index) => {
+            const {
+              designation,
+              organization,
+              association,
+              start_month_formatted,
+              start_year,
+              end_month_formatted,
+              end_year,
+            } = data;
+            return (
+              <Box
+                key={index}
+                sx={{
+                  bgcolor: index % 2 == 0 ? "table.odd" : "white",
+                  width: "100%",
+                  p: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="subtitle">
+                  {designation} ({association}) at {organization} (
+                  {start_month_formatted} {start_year.toString()}-
+                  {end_month_formatted}
+                  {end_year})
+                </Typography>
+                <Box sx={{ display: "flex" }}>
+                  <Tooltip title="Edit">
+                    <IconButton>
+                      <EditRoundedIcon sx={{ color: "primary.main" }} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete">
+                    <IconButton>
+                      <DeleteRoundedIcon sx={{ color: "red.dark" }} />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </Box>
+            );
+          })}
+        </Box>
         <Box sx={{ my: 2 }}>
           <Box
             sx={{

@@ -36,7 +36,7 @@ const Options = () => {
   ];
   return (
     <Box>
-      <ModalComponent open={open} onClose={handleClose} isfor={"option"} />
+      <ModalComponent open={open} onClose={handleClose} modalisfor={"option"} />
       <Box
         sx={{
           display: "flex",

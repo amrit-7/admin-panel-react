@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -13,21 +14,7 @@ import {
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import DatePickerComponent from "../DatePicker/DatePickerComponent";
-const EditEducation = () => {
-  const education = [
-    {
-      name: "Advanced Diploma",
-      from: "GP Technical Institute",
-      start: "June 2023",
-      end: "Present",
-    },
-    {
-      name: "Graduations",
-      from: "Lawrence School",
-      start: "Feb 2023",
-      end: "December 2023",
-    },
-  ];
+const EditEducation = ({ education }) => {
   return (
     <>
       <Box>
@@ -36,7 +23,14 @@ const EditEducation = () => {
         </Typography>
         <Box sx={{ mt: 2 }}>
           {education.map((data, index) => {
-            const { name, from, start, end } = data;
+            const {
+              degree_name,
+              institute,
+              start_month_formatted,
+              start_year,
+              end_month_formatted,
+              end_year,
+            } = data;
             return (
               <Box
                 key={index}
@@ -50,7 +44,9 @@ const EditEducation = () => {
                 }}
               >
                 <Typography variant="subtitle">
-                  {name}, {from}({start}-{end})
+                  {degree_name}, {institute}({start_month_formatted}{" "}
+                  {start_year.toString()}-{end_month_formatted}
+                  {end_year})
                 </Typography>
                 <Box sx={{ display: "flex" }}>
                   <Tooltip title="Edit">

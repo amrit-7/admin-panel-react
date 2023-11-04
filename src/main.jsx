@@ -1,7 +1,12 @@
+import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
+import { Slide, ToastContainer } from "react-toastify";
+import { PersistGate } from "redux-persist/integration/react";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { persistor, store } from "./store/index.js";
 import App from "./App.jsx";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 const theme = createTheme({
   palette: {
@@ -44,6 +49,11 @@ const theme = createTheme({
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <App />
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ToastContainer transition={Slide} autoClose="1000" />
+        <App />
+      </PersistGate>
+    </Provider>
   </ThemeProvider>
 );

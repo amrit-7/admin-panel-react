@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -14,7 +16,16 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const EditTeachingDetails = () => {
+const EditTeachingDetails = ({ charges }) => {
+  console.log(
+    "🚀 ~ file: EditTeachingDetails.jsx:20 ~ EditTeachingDetails ~ charges:",
+    charges
+  );
+  const {
+    available_for_online_teaching,
+    fee_type,
+    min_charge_in_tutor_currency,
+  } = charges;
   const [value, setValue] = useState("yes");
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -49,13 +60,14 @@ const EditTeachingDetails = () => {
             <FormControl sx={{ mt: 1 }} fullWidth>
               <InputLabel id="demo-simple-select-label">Type</InputLabel>
               <Select
+                value={fee_type}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Degree Type"
               >
-                <MenuItem value={10}>Monthly</MenuItem>
-                <MenuItem value={20}>Weekly</MenuItem>
-                <MenuItem value={30}>Daily</MenuItem>
+                <MenuItem value={"Monthly"}>Monthly</MenuItem>
+                <MenuItem value={"Weekly"}>Weekly</MenuItem>
+                <MenuItem value={"Daily"}>Daily</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -68,7 +80,11 @@ const EditTeachingDetails = () => {
             }}
           >
             <Typography variant="caption">Minimum Fee</Typography>
-            <TextField sx={{ mt: 1 }} label="Maximum Fee" placeholder="3000" />
+            <TextField
+              sx={{ mt: 1 }}
+              placeholder="3000"
+              defaultValue={min_charge_in_tutor_currency}
+            />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
             <Typography variant="caption">I charge</Typography>
