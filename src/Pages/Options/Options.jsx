@@ -5,27 +5,18 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import Table from "../../Components/Table/Table";
 import ModalComponent from "../../Components/Modal/Modal";
+import { useFetchAllOptionsQuery } from "../../store";
+import TableSkeleton from "../../Components/Skeleton/TableSkeleton";
 const Options = () => {
+  const { data, error, isLoading } = useFetchAllOptionsQuery();
+  const options = !isLoading && !error && data ? data.data : [];
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const rows = [
-    {
-      id: 1,
-      col1: "Gender",
-      col2: "Gender Option for the tutors",
-      col3: "10/1/2023",
-    },
-    {
-      id: 2,
-      col1: "Student Type",
-      col2: "Type of the student",
-      col3: "10/5/2023",
-    },
-  ];
+
   const columns = [
-    { field: "col1", headerName: "Option", width: 200 },
-    { field: "col2", headerName: "Details", width: 200 },
+    { field: "option", headerName: "Option", width: 200 },
+    { field: "details", headerName: "Details", width: 200 },
     {
       field: "col3",
       headerName: "Created On",
@@ -57,7 +48,15 @@ const Options = () => {
         </Button>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Table initialcolumns={columns} initialrows={rows} />
+        {isLoading ? (
+          <TableSkeleton />
+        ) : (
+          <Table
+            initialcolumns={columns}
+            initialrows={options}
+            isfor={"options"}
+          />
+        )}
       </Box>
     </Box>
   );

@@ -63,11 +63,12 @@ export default function DeleteModal(props) {
             flexDirection: "column",
             justifyContent: "center",
             width: "100%",
+            textAlign: "center",
           }}
         >
           {modalisfor === "deleteSubject" ? (
             <>
-              <Typography>Are you sure you want to delete subject ?</Typography>
+              <Typography>Sure you want to delete subject ?</Typography>
               <Box
                 sx={{
                   display: "flex",

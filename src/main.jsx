@@ -43,7 +43,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["'Poppins', sans-serif"],
+    fontFamily: ["'Roboto', sans-serif"],
   },
 });
 ReactDOM.createRoot(document.getElementById("root")).render(

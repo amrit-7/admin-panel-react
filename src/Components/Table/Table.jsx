@@ -106,7 +106,11 @@ const Table = ({ initialrows, initialcolumns, isfor }) => {
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
         }
         rows={initialrows}
-        columns={isfor == "students" ? initialcolumns : ActionInitialColumns}
+        columns={
+          isfor == "students" || isfor == "options"
+            ? initialcolumns
+            : ActionInitialColumns
+        }
         rowsPerPageOptions={[]}
       />
       <ModalComponent

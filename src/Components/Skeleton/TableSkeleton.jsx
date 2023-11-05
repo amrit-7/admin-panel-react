@@ -2,7 +2,7 @@ import { Box, Skeleton } from "@mui/material";
 
 const TableSkeleton = () => {
   return (
-    <Box>
+    <Box sx={{ border: "0.5px solid #F0F0F0", borderRadius: "6px", p: 1 }}>
       <Box
         sx={{
           display: "flex",
