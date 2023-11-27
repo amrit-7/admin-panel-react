@@ -1,8 +1,8 @@
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router";
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidebar/Sidebar";
-import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 const Layout = () => {
   const currentUser = useSelector((state) => {
     return state.currentUser.data.token;
