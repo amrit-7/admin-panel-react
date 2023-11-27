@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -19,7 +19,6 @@ const AddOption = ({ close }) => {
   const { data, error, isLoading } = useFetchParentOptionsQuery();
   const parentOptions = !isLoading && !error && data ? data.data : [];
   const [option, setOption] = useState("");
-  console.log("🚀 ~ file: AddOption.jsx:22 ~ AddOption ~ option:", option);
   const [details, setDetail] = useState("");
   const [parent, setParent] = useState("");
   const handleOptionValue = (e) => {
@@ -45,7 +44,6 @@ const AddOption = ({ close }) => {
     }
     const data = { option, details, parent_id: parent };
     const res = await addOption(data);
-    console.log("🚀 ~ file: AddOption.jsx:44 ~ handleAddOption ~ res:", res);
     if (res.data.success == true) {
       toast.success("Category Added Successfully");
       close();

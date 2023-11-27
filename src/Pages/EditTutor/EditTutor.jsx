@@ -21,7 +21,10 @@ const EditTutor = () => {
     <EditEducation key={3} education={tutorData.tutor_educations} />,
     <EditExperience key={4} experience={tutorData.tutor_experiences} />,
     <EditTeachingDetails key={5} charges={tutorData.charges} />,
-    <EditProfileDescription key={6} />,
+    <EditProfileDescription
+      key={6}
+      description={tutorData.tutor_information}
+    />,
   ];
   return (
     <Box>
